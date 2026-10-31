@@ -1,0 +1,8 @@
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+data/mlrecall.db
+data/simulated/
+artifacts/*.npz
+results/

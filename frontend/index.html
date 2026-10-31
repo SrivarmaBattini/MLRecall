@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MLRecall - learn machine learning, then remember it</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <div id="login" class="login" hidden>
+    <div class="login-card">
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="19" fill="none" stroke="#DCE3E8" stroke-width="5" />
+        <circle cx="24" cy="24" r="19" fill="none" stroke="#3F8F5F" stroke-width="5" stroke-linecap="round"
+          stroke-dasharray="90 120" transform="rotate(-90 24 24)" />
+      </svg>
+      <h1>MLRecall</h1>
+      <p>Study machine learning topic by topic. Quiz yourself, and the agent tells you which topics to revisit today so
+        they stay with you.</p>
+      <label for="username">Your name</label>
+      <input id="username" maxlength="40" autocomplete="username" placeholder="for example, Sree">
+      <label for="password" style="margin-top:.8rem">Password (6 or more characters)</label>
+      <input id="password" type="password" autocomplete="current-password">
+      <p class="note" style="margin:.4rem 0 0">New name? This creates your account.</p>
+      <button id="login-btn" class="btn primary">Log in or create account</button>
+      <button id="demo-btn" class="btn quiet">Open the simulated demo learner</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </div>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <aside id="sidebar" class="sidebar" aria-label="Topics">
+      <a class="brand" href="#/today">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="19" fill="none" stroke="#DCE3E8" stroke-width="6" />
+          <circle cx="24" cy="24" r="19" fill="none" stroke="#3F8F5F" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="90 120" transform="rotate(-90 24 24)" />
+        </svg>
+        <span>MLRecall</span>
+      </a>
+      <nav class="nav">
+        <a href="#/today" data-nav="today">Today's recall</a>
+        <a href="#/progress" data-nav="progress">Progress</a>
+        <a href="#/settings" data-nav="settings">Settings</a>
+      </nav>
+      <div id="topic-list" class="topic-list"></div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar">
+        <button id="menu-btn" class="btn quiet menu" aria-label="Open topics">Topics</button>
+        <span id="who" class="who"></span>
+        <span id="today-label" class="today-label"></span>
+      </header>
+      <main id="main" class="main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="/static/app.js"></script>
+</body>
+
+</html>

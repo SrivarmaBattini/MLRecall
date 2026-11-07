@@ -1,6 +1,5 @@
 """
-qwi.py - the project's single RL model: QWI, Q-learning for the Whittle index
-(Robledo, Borkar, Ayesta, Avrachenkov), tabular, discounted criterion.
+qwi.py - the project's single RL model: QWI, Q-learning for the Whittle index.
 
 Idea. The Whittle index of state j is the passive subsidy lam_j at which "review" and
 "don't review" are equally good in j. QWI learns it WITHOUT knowing the dynamics, with

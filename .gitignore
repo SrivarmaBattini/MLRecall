@@ -6,3 +6,4 @@ data/mlrecall.db
 data/simulated/
 artifacts/*.npz
 results/
+*.docx

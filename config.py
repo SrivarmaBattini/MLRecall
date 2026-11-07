@@ -52,7 +52,7 @@ class AgentConfig:
     b_max: float = 40.0        # largest bucket base half-life (days)
     default_K: int = 5         # daily review budget
     # QWI training (see rl/qwi.py)
-    qwi_steps: int = 4_000_000   # transitions per bucket (a few minutes on a laptop)
+    qwi_steps: int = 4_000_000   # transitions per bucket 
     qwi_lambda_lo: float = -1.0
     qwi_lambda_hi: float = 15.0
 

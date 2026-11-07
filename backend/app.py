@@ -234,9 +234,11 @@ def submit_quiz(topic_id: str, body: QuizIn, authorization: str | None = Header(
     if t is None:
         raise HTTPException(404, "Unknown topic.")
     bank = {q["id"]: q for q in t["questions"]}
-    if (len(body.question_ids) != len(body.answers) or len(set(body.question_ids)) != len(body.question_ids)
-            or not body.question_ids or any(q not in bank for q in body.question_ids)):
-        raise HTTPException(400, "Invalid quiz submission.")
+    if (len(body.question_ids) != RULES.n_questions
+            or len(body.answers) != RULES.n_questions
+            or len(set(body.question_ids)) != RULES.n_questions
+            or any(q not in bank for q in body.question_ids)):
+        raise HTTPException(400, f"A quiz must contain exactly {RULES.n_questions} distinct valid questions.")
     with db.connect() as conn:
         u = get_user(conn, authorization)
         if not service.has_read(conn, u["id"], topic_id):

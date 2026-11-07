@@ -121,12 +121,16 @@ def apply_quiz(state, day: int, n_correct: int, n_questions: int = None):
       kind 'retake' - a same-day repeat: stored by the caller, state unchanged
       kind 'review' - level update; review_row = (k_before, d, n_correct, n_questions) feeds estimate_speed
     """
+    nq = RULES.n_questions if n_questions is None else int(n_questions)
+    if nq != RULES.n_questions:
+        raise ValueError(f"Expected exactly {RULES.n_questions} questions, got {nq}.")
+    if not 0 <= n_correct <= nq:
+        raise ValueError(f"Correct-answer count must be between 0 and {nq}.")
     if state is None:
         return {"k": first_quiz_level(n_correct), "last_day": day, "n_reviews": 0}, None, "first"
     d = day - state["last_day"]
     if d <= 0:
         return state, None, "retake"
-    k2, success = review_update(state["k"], n_correct)
+    k2, _ = review_update(state["k"], n_correct)
     new_state = {"k": k2, "last_day": day, "n_reviews": state["n_reviews"] + 1}
-    nq = RULES.n_questions if n_questions is None else n_questions
-    return new_state, (state["k"], d, int(n_correct), int(nq)), "review"
+    return new_state, (state["k"], d, int(n_correct), nq), "review"

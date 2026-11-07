@@ -84,6 +84,27 @@ def test_full_learning_loop(client):
     assert prog["quizzed"] == 1 and prog["recommended_done"] == 1
 
 
+
+def test_quiz_must_have_exactly_five_questions(client):
+    u = login(client, "quiz_count_guard")
+    topic = "linear-regression"
+    assert client.post(f"/api/topics/{topic}/read", headers=hdr(u)).status_code == 200
+    questions = client.get(f"/api/topics/{topic}/quiz", headers=hdr(u)).json()["questions"]
+    ids = [q["id"] for q in questions]
+
+    # A partial quiz must not initialize or modify the learner's memory level.
+    r = client.post(f"/api/topics/{topic}/quiz", headers=hdr(u), json={
+        "question_ids": ids[:4], "answers": [None] * 4,
+    })
+    assert r.status_code == 400
+    status = client.get(f"/api/topics/{topic}", headers=hdr(u)).json()
+    assert status["level"] is None
+
+    # A valid five-question first quiz still initializes the level.
+    first = take_quiz(client, u, topic, 4)
+    assert first["level_after"] == 2
+
+
 def test_budget_is_respected(client):
     u = login(client, "budget")
     topics = [t["id"] for g in client.get("/api/topics", headers=hdr(u)).json() for t in g["topics"]][:8]

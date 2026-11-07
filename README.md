@@ -4,24 +4,6 @@ MLRecall is a full-stack spaced-repetition web application that uses **Reinforce
 
 ---
 
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [System Architecture](#system-architecture)
-- [RL Formulation](#rl-formulation)
-- [Memory Model](#memory-model)
-- [Project Structure](#project-structure)
-- [Dependencies](#dependencies)
-- [Setup & Installation](#setup--installation)
-- [Running the Application](#running-the-application)
-- [Training the RL Agent](#training-the-rl-agent)
-- [Evaluation & Verification](#evaluation--verification)
-- [Running the Full Pipeline](#running-the-full-pipeline)
-- [API Reference](#api-reference)
-- [Content Topics](#content-topics)
-
----
-
 ## Project Overview
 
 Standard spaced-repetition systems (Anki, SM-2, Leitner) use fixed heuristic intervals. MLRecall replaces those heuristics with a **learned policy** derived from the Whittle index — a theoretically principled priority score for restless bandits.
@@ -37,26 +19,26 @@ Key design goals:
 
 ```
 ┌───────────────────┐      HTTP/JSON      ┌──────────────────────┐
-│   Browser UI      │ ◄─────────────────► │  FastAPI Backend      │
-│  (Vanilla JS)     │                     │  backend/app.py       │
+│   Browser UI      │ ◄─────────────────► │  FastAPI Backend     │
+│      ( JS)        │                     │  backend/app.py      │
 └───────────────────┘                     └──────────┬───────────┘
                                                      │
                               ┌──────────────────────┼────────────────────────┐
                               │                      │                        │
-                     ┌────────▼──────┐    ┌──────────▼──────┐    ┌───────────▼──────┐
-                     │   SQLite DB   │    │   Scheduler      │    │  Content Parser  │
-                     │  backend/db   │    │  backend/sched.  │    │  backend/content │
-                     └───────────────┘    └──────────┬───────┘    └──────────────────┘
+                     ┌────────▼──────┐    ┌──────────▼──────┐    ┌────────────▼─────┐
+                     │   SQLite DB   │    │   Scheduler     │    │  Content Parser  │
+                     │  backend/db   │    │  backend/sched. │    │  backend/content │
+                     └───────────────┘    └──────────┬──────┘    └──────────────────┘
                                                      │ loads
                                           ┌──────────▼───────────┐
-                                          │  Index Table          │
-                                          │  artifacts/           │
-                                          │  index_table.npz      │
-                                          └──────────┬────────────┘
+                                          │  Index Table         │
+                                          │  artifacts/          │
+                                          │  index_table.npz     │
+                                          └──────────┬───────────┘
                                                      │ produced by
                                           ┌──────────▼───────────┐
                                           │  QWI Agent (offline) │
-                                          │  rl/qwi.py            │
+                                          │  rl/qwi.py           │
                                           └──────────────────────┘
 ```
 
